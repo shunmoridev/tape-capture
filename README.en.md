@@ -10,6 +10,13 @@ recordings automatically while remaining fully controllable by the user.
 >FFmpeg is required to use TapeCapture and is not bundled with the application.
 >Install FFmpeg separately, then make the ffmpeg command available on PATH, or set TAPECAPTURE_FFMPEG_PATH to the FFmpeg executable before starting the app.
 
+![Screenshot](docs/img/screenshot.png)
+
+## Download
+
+Windows installers are available from [GitHub Releases](https://github.com/shunmoridev/tape-capture/releases).
+FFmpeg is not bundled and must be installed separately. Release builds are currently unsigned, so Windows SmartScreen may display a warning.
+
 ## What it does
 
 - Shows the capture device continuously with independent preview audio controls.
@@ -82,8 +89,11 @@ Useful checks:
 
 ```powershell
 pnpm build
+pnpm test:ts
 pnpm test:rust
 ```
+
+See [`docs/en/RELEASING.md`](docs/en/RELEASING.md) for the release process.
 
 ## Support
 
@@ -92,7 +102,7 @@ If you enjoy TapeCapture, you can
 
 <p align="left">
   <a href="https://ko-fi.com/for_mimi_treats">
-    <img src="docs/img/my_best_partner_mimi.png" style="border-radius: 50%;" alt="Mimi" width="200">
+    <img src="docs/img/my_best_partner_mimi.png" alt="Mimi" width="200">
   </a>
 </p>
 

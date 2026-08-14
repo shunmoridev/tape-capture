@@ -11,6 +11,11 @@ TapeCapture は、VHSデッキやその他のキャプチャーデバイスか�
 
 ![TapeCapture のスクリーンショット](docs/img/screenshot.png)
 
+## ダウンロード
+
+Windows 向けインストーラーは [GitHub Releases](https://github.com/shunmoridev/tape-capture/releases) からダウンロードできます。
+FFmpeg は同梱されていないため、別途インストールしてください。現在のリリースビルドはコード署名されておらず、Windows SmartScreen の警告が表示される場合があります。
+
 ## 主な機能
 
 * キャプチャーデバイスの映像を常時表示し、プレビュー音声を独立して制御できます。
@@ -69,8 +74,11 @@ pnpm tauri dev
 
 ```powershell
 pnpm build
+pnpm test:ts
 pnpm test:rust
 ```
+
+リリース作成手順は [`docs/en/RELEASING.md`](docs/en/RELEASING.md) を参照してください。
 
 ## 応援
 
@@ -79,7 +87,7 @@ TapeCapture を気に入っていただけたら、
 
 <p align="left">
   <a href="https://ko-fi.com/for_mimi_treats">
-    <img src="docs/img/my_best_partner_mimi.png" style="border-radius: 50%;" alt="Mimi" width="200">
+    <img src="docs/img/my_best_partner_mimi.png" alt="Mimi" width="200">
   </a>
 </p>
 

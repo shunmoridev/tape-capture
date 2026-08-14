@@ -1,0 +1,83 @@
+name: Release
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - "v*"
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  release-windows:
+    name: Build Windows installers
+    runs-on: windows-latest
+    timeout-minutes: 45
+    permissions:
+      contents: write
+
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v7
+
+      - name: Set up pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 11.19.0
+          run_install: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: lts/*
+          cache: pnpm
+
+      - name: Set up Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Cache Rust build output
+        uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: "./src-tauri -> target"
+
+      - name: Install frontend dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Verify release version
+        shell: pwsh
+        run: |
+          $tauriVersion = (Get-Content src-tauri/tauri.conf.json | ConvertFrom-Json).version
+          $packageVersion = (Get-Content package.json | ConvertFrom-Json).version
+          $cargoMatch = Select-String -Path src-tauri/Cargo.toml -Pattern '^version\s*=\s*"([^"]+)"'
+          $cargoVersion = $cargoMatch.Matches[0].Groups[1].Value
+
+          if ($tauriVersion -ne $packageVersion -or $tauriVersion -ne $cargoVersion) {
+            throw "Version mismatch: Tauri=$tauriVersion, package=$packageVersion, Cargo=$cargoVersion"
+          }
+
+          if ("${{ github.ref }}" -like "refs/tags/*" -and "${{ github.ref_name }}" -ne "v$tauriVersion") {
+            throw "Tag ${{ github.ref_name }} does not match application version v$tauriVersion"
+          }
+
+      - name: Run TypeScript tests
+        run: pnpm test:ts
+
+      - name: Run Rust tests
+        run: pnpm test:rust
+
+      - name: Build installers and create draft release
+        uses: tauri-apps/tauri-action@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tagName: ${{ startsWith(github.ref, 'refs/tags/') && github.ref_name || 'v__VERSION__' }}
+          releaseName: "TapeCapture v__VERSION__"
+          releaseBody: |
+            Download a Windows installer from the assets below.
+
+            FFmpeg is required and must be installed separately. This build is not code signed, so Windows SmartScreen may display a warning.
+          releaseDraft: true
+          prerelease: false
+          args: --bundles nsis,msi
