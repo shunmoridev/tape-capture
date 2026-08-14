@@ -1,0 +1,243 @@
+# TapeCapture license inventory
+#
+# This file records direct dependencies, distribution-sensitive transitive
+# dependencies, external runtime tools, and first-party assets. Exact resolved
+# package versions remain authoritative in pnpm-lock.yaml and
+# src-tauri/Cargo.lock.
+#
+# distribution: allowed | conditional | not_distributed | denied | unknown
+# confidence:   lockfile_verified | upstream_verified | owner_attested
+# isolation:    L0 (in-process) | L1 (system runtime) | L2 (subprocess)
+
+schema_version: "1"
+last_reviewed: 2026-08-10
+
+project:
+  name: TapeCapture
+  version: 0.1.0
+  license:
+    name: MIT License
+    spdx_id: MIT
+    file: ../LICENSE
+    copyright: "Copyright (c) 2026 shunmoridev"
+  distribution: allowed
+  obligations:
+    - preserve_copyright_and_license_notice
+
+inventory_scope:
+  direct_dependencies: complete
+  transitive_dependencies: >-
+    License families were reviewed from both JavaScript and Rust lockfiles.
+    Entries are listed individually below when their obligations need explicit
+    release handling; permissive transitive packages remain authoritative in
+    their lockfiles and package metadata.
+  authoritative_files:
+    - ../package.json
+    - ../pnpm-lock.yaml
+    - ../src-tauri/Cargo.toml
+    - ../src-tauri/Cargo.lock
+
+review_summary:
+  permissive_license_families_found:
+    - MIT
+    - Apache-2.0
+    - BSD-3-Clause
+    - ISC
+    - Zlib
+    - Unicode-3.0
+    - CC0-1.0
+    - Unlicense
+  conditional_license_families_found:
+    - MPL-2.0
+    - CC-BY-4.0
+  denied_or_unresolved_runtime_dependencies_found: false
+  note: >-
+    No GPL, AGPL, SSPL, non-commercial, or source-unavailable package was
+    identified in the JavaScript or Rust application dependency graphs.
+    FFmpeg and libx264 are tracked separately because they are external
+    executables/libraries and are not distributed with TapeCapture.
+
+components:
+  # Frontend libraries included in the bundled JavaScript.
+  - component_id: tauri_javascript_api
+    kind: library
+    ecosystem: npm
+    package_name: "@tauri-apps/api"
+    version_requirement: "^2.8.0"
+    isolation: L0
+    bundled_in_release: true
+    code_license: {name: "Apache-2.0 OR MIT", spdx_expression: "Apache-2.0 OR MIT", confidence: lockfile_verified}
+    source_url: "https://github.com/tauri-apps/tauri"
+    distribution: allowed
+    obligations: [preserve_selected_license_and_notices]
+
+  - component_id: tauri_dialog_javascript
+    kind: library
+    ecosystem: npm
+    package_name: "@tauri-apps/plugin-dialog"
+    version_requirement: "^2.4.0"
+    isolation: L0
+    bundled_in_release: true
+    code_license: {name: "MIT OR Apache-2.0", spdx_expression: "MIT OR Apache-2.0", confidence: lockfile_verified}
+    source_url: "https://github.com/tauri-apps/plugins-workspace"
+    distribution: allowed
+    obligations: [preserve_selected_license_and_notices]
+
+  - component_id: react
+    kind: library
+    ecosystem: npm
+    package_name: react
+    version_requirement: "^19.1.1"
+    isolation: L0
+    bundled_in_release: true
+    code_license: {name: MIT, spdx_id: MIT, confidence: lockfile_verified}
+    source_url: "https://github.com/facebook/react"
+    distribution: allowed
+    obligations: [preserve_copyright_and_license_notice]
+
+  - component_id: react_dom
+    kind: library
+    ecosystem: npm
+    package_name: react-dom
+    version_requirement: "^19.1.1"
+    isolation: L0
+    bundled_in_release: true
+    code_license: {name: MIT, spdx_id: MIT, confidence: lockfile_verified}
+    source_url: "https://github.com/facebook/react"
+    distribution: allowed
+    obligations: [preserve_copyright_and_license_notice]
+
+  # Rust libraries compiled into the desktop application.
+  - component_id: rust_runtime_dependencies
+    kind: library_group
+    ecosystem: cargo
+    isolation: L0
+    bundled_in_release: true
+    packages:
+      - {package_name: chrono, version_requirement: "^0.4", license: "MIT OR Apache-2.0", source_url: "https://github.com/chronotope/chrono"}
+      - {package_name: fs2, version_requirement: "^0.4", license: "MIT OR Apache-2.0", source_url: "https://github.com/danburkert/fs2-rs"}
+      - {package_name: regex, version_requirement: "^1", license: "MIT OR Apache-2.0", source_url: "https://github.com/rust-lang/regex"}
+      - {package_name: serde, version_requirement: "^1", license: "MIT OR Apache-2.0", source_url: "https://github.com/serde-rs/serde"}
+      - {package_name: serde_json, version_requirement: "^1", license: "MIT OR Apache-2.0", source_url: "https://github.com/serde-rs/json"}
+      - {package_name: tauri, version_requirement: "^2", license: "Apache-2.0 OR MIT", source_url: "https://github.com/tauri-apps/tauri"}
+      - {package_name: tauri-plugin-dialog, version_requirement: "^2", license: "Apache-2.0 OR MIT", source_url: "https://github.com/tauri-apps/plugins-workspace"}
+      - {package_name: tauri-plugin-opener, version_requirement: "^2", license: "Apache-2.0 OR MIT", source_url: "https://github.com/tauri-apps/plugins-workspace"}
+      - {package_name: uuid, version_requirement: "^1", license: "Apache-2.0 OR MIT", source_url: "https://github.com/uuid-rs/uuid"}
+    distribution: allowed
+    confidence: lockfile_verified
+    obligations:
+      - preserve_selected_license_and_notices
+      - include_apache_notice_files_when_provided_upstream
+
+  # MPL is file-level copyleft. These transitive crates may be statically
+  # linked into release binaries without changing TapeCapture's MIT license,
+  # but recipients must be told where to obtain their MPL source.
+  - component_id: mpl_transitive_rust_dependencies
+    kind: library_group
+    ecosystem: cargo
+    isolation: L0
+    bundled_in_release: true
+    packages:
+      - {package_name: cssparser, license: MPL-2.0, source_url: "https://crates.io/crates/cssparser"}
+      - {package_name: cssparser-macros, license: MPL-2.0, source_url: "https://crates.io/crates/cssparser-macros"}
+      - {package_name: dtoa-short, license: MPL-2.0, source_url: "https://crates.io/crates/dtoa-short"}
+      - {package_name: option-ext, license: MPL-2.0, source_url: "https://crates.io/crates/option-ext"}
+      - {package_name: selectors, license: MPL-2.0, source_url: "https://crates.io/crates/selectors"}
+    code_license: {name: "Mozilla Public License 2.0", spdx_id: MPL-2.0, confidence: lockfile_verified, copyleft: true}
+    distribution: conditional
+    obligations:
+      - include_mpl_2_0_license_notice
+      - inform_binary_recipients_where_corresponding_source_is_available
+      - publish_modifications_to_mpl_covered_files_under_mpl_2_0
+
+  # Build and test tools are not included in the application runtime artifact.
+  - component_id: javascript_build_dependencies
+    kind: build_tool_group
+    ecosystem: npm
+    isolation: L0
+    bundled_in_release: false
+    packages:
+      - {package_name: "@tauri-apps/cli", version_requirement: "^2.8.4", license: "Apache-2.0 OR MIT"}
+      - {package_name: "@types/react", version_requirement: "^19.1.10", license: MIT}
+      - {package_name: "@types/react-dom", version_requirement: "^19.1.7", license: MIT}
+      - {package_name: "@vitejs/plugin-react", version_requirement: "^4.7.0", license: MIT}
+      - {package_name: typescript, version_requirement: "~5.8.3", license: Apache-2.0}
+      - {package_name: vite, version_requirement: "^7.1.7", license: MIT}
+      - {package_name: vitest, version_requirement: "^4.1.10", license: MIT}
+      - {package_name: tauri-build, version_requirement: "^2", license: "Apache-2.0 OR MIT"}
+    distribution: not_distributed
+    confidence: lockfile_verified
+
+  - component_id: caniuse_lite
+    kind: build_data
+    ecosystem: npm
+    package_name: caniuse-lite
+    isolation: L0
+    bundled_in_release: false
+    code_license: {name: "Creative Commons Attribution 4.0", spdx_id: CC-BY-4.0, confidence: lockfile_verified}
+    source_url: "https://github.com/browserslist/caniuse-lite"
+    distribution: not_distributed
+    obligations:
+      - provide_attribution_if_the_database_is_redistributed
+
+  # FFmpeg is required at runtime but is deliberately not part of the current
+  # source repository or binary releases. TapeCapture invokes it as a process.
+  - component_id: ffmpeg
+    kind: application
+    role: video_finalization_and_validation
+    isolation: L2
+    bundled_in_release: false
+    code_license:
+      name: "LGPL-2.1-or-later, or GPL-2.0-or-later when GPL components are enabled"
+      possible_spdx_ids: [LGPL-2.1-or-later, GPL-2.0-or-later]
+      source_url: "https://ffmpeg.org/legal.html"
+      confidence: upstream_verified
+      copyleft: true
+    usage:
+      executable_resolution_order:
+        - TAPECAPTURE_FFMPEG_PATH
+        - "resources/bin/ffmpeg[.exe] (supported but not currently bundled)"
+        - PATH
+      required_encoder: libx264
+    depends_on: [libx264]
+    distribution: not_distributed
+    note: >-
+      The required libx264 encoder makes a compatible FFmpeg build GPL rather
+      than LGPL. If a future release bundles FFmpeg, this entry must be changed
+      to conditional and the exact corresponding FFmpeg/x264 source, build
+      configuration, copyright notices, and GPL text must accompany the release.
+
+  - component_id: libx264
+    kind: library
+    role: h264_encoder_used_through_ffmpeg
+    isolation: L2
+    bundled_in_release: false
+    code_license: {name: "GPL-2.0-or-later", spdx_id: GPL-2.0-or-later, confidence: upstream_verified, copyleft: true}
+    source_url: "https://code.videolan.org/videolan/x264"
+    distribution: not_distributed
+
+  # The project owner confirmed sufficient rights to distribute the bundled
+  # first-party artwork and documentation assets under the project license.
+  - component_id: first_party_assets
+    kind: asset_group
+    bundled_in_release: true
+    paths:
+      - ../public/
+      - ../src-tauri/icons/
+      - img/
+    content_license: {name: MIT, spdx_id: MIT, confidence: owner_attested}
+    distribution: allowed
+    note: >-
+      To the extent that intellectual-property rights exist in these assets,
+      the project owner makes those rights available under the root MIT License.
+      This records permission to distribute without publishing private creation
+      history or source-material details.
+
+release_requirements:
+  current_source_release:
+    - include_root_license
+  current_binary_release:
+    - include_root_license
+    - generate_and_include_third_party_notices
+    - include_mpl_source_availability_notice
+    - do_not_bundle_ffmpeg_without_reopening_this_license_review

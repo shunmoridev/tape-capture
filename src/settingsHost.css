@@ -1,0 +1,62 @@
+:root {
+  font-family: Inter, "Segoe UI", "Yu Gothic UI", sans-serif;
+  color: #e9edf7;
+  background: #1d212c;
+  --panel: #1d212c;
+  --surface: #242936;
+  --surface-hover: #2b3140;
+  --border: #2b3140;
+  --border-strong: #3a4253;
+  --text: #e9edf7;
+  --muted: #8f98ab;
+  --primary: #5d8fff;
+  --primary-soft: rgba(93, 143, 255, .13);
+  color-scheme: dark;
+}
+
+:root[data-theme="light"] {
+  color: #1d2330;
+  background: #fff;
+  --panel: #fff;
+  --surface: #eef1f6;
+  --surface-hover: #e3e8f0;
+  --border: #d9dfe9;
+  --border-strong: #c5ccda;
+  --text: #1d2330;
+  --muted: #667085;
+  --primary: #356fe4;
+  --primary-soft: rgba(53, 111, 228, .1);
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) {
+    color: #1d2330;
+    background: #fff;
+    --panel: #fff;
+    --surface: #eef1f6;
+    --surface-hover: #e3e8f0;
+    --border: #d9dfe9;
+    --border-strong: #c5ccda;
+    --text: #1d2330;
+    --muted: #667085;
+    --primary: #356fe4;
+    --primary-soft: rgba(53, 111, 228, .1);
+    color-scheme: light;
+  }
+}
+
+* { box-sizing: border-box; }
+html, body, #settings-root { width: 100%; height: 100%; margin: 0; overflow: hidden; }
+body { background: var(--panel); color: var(--text); }
+button { font: inherit; color: var(--text); }
+button:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+
+.native-settings { height: 100%; display: flex; flex-direction: column; gap: 2px; padding: 6px; border: 1px solid var(--border-strong); border-radius: 8px; background: var(--panel); box-shadow: 0 6px 18px rgba(0, 0, 0, .24); }
+.native-settings-section { display: flex; flex-direction: column; gap: 2px; }
+.native-settings-section + .native-settings-section { margin-top: 6px; padding-top: 6px; border-top: 1px solid var(--border); }
+.native-settings-label { margin: 0; padding: 4px 8px 2px; color: var(--muted); font-size: 11px; }
+.native-settings-options { display: flex; flex-direction: column; gap: 2px; }
+.native-settings-option { padding: .45em .7em; border: 1px solid transparent; border-radius: 7px; background: transparent; color: var(--muted); cursor: pointer; font-size: 12px; text-align: left; }
+.native-settings-option:hover { border-color: transparent; background: var(--surface-hover); color: var(--text); }
+.native-settings-option--active { border-color: color-mix(in srgb, var(--primary) 45%, var(--border)); background: var(--primary-soft); color: var(--primary); font-weight: 650; }

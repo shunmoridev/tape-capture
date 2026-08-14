@@ -1,0 +1,99 @@
+:root {
+  font-family: Inter, "Segoe UI", "Yu Gothic UI", sans-serif;
+  color: #e9edf7;
+  background: transparent;
+  --backdrop: rgba(5, 7, 11, .68);
+  --panel: #1d212c;
+  --panel-raised: #242936;
+  --surface: #242936;
+  --surface-hover: #2b3140;
+  --border: #2b3140;
+  --border-strong: #3a4253;
+  --text: #e9edf7;
+  --muted: #8f98ab;
+  --primary: #5d8fff;
+  --primary-strong: #356fe4;
+  --primary-soft: rgba(93, 143, 255, .13);
+  color-scheme: dark;
+}
+
+:root[data-theme="light"] {
+  color: #1d2330;
+  --backdrop: rgba(26, 31, 43, .42);
+  --panel: #fff;
+  --panel-raised: #fff;
+  --surface: #eef1f6;
+  --surface-hover: #e3e8f0;
+  --border: #d9dfe9;
+  --border-strong: #c5ccda;
+  --text: #1d2330;
+  --muted: #667085;
+  --primary: #356fe4;
+  --primary-strong: #285fc8;
+  --primary-soft: rgba(53, 111, 228, .1);
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) {
+    color: #1d2330;
+    --backdrop: rgba(26, 31, 43, .42);
+    --panel: #fff;
+    --panel-raised: #fff;
+    --surface: #eef1f6;
+    --surface-hover: #e3e8f0;
+    --border: #d9dfe9;
+    --border-strong: #c5ccda;
+    --text: #1d2330;
+    --muted: #667085;
+    --primary: #356fe4;
+    --primary-strong: #285fc8;
+    --primary-soft: rgba(53, 111, 228, .1);
+    color-scheme: light;
+  }
+}
+
+* { box-sizing: border-box; }
+html, body, #recording-settings-root { width: 100%; height: 100%; margin: 0; overflow: hidden; }
+body { color: var(--text); background: transparent; }
+button, input { font: inherit; }
+button:focus-visible, input:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+button { border: 1px solid var(--border-strong); border-radius: 7px; background: var(--surface); color: var(--text); cursor: pointer; }
+button:hover { border-color: var(--primary); background: var(--surface-hover); }
+
+#recording-settings-root { display: grid; place-items: center; padding: 28px; background: var(--backdrop); }
+.recording-settings-modal { width: min(620px, 100%); max-height: 100%; overflow: auto; border: 1px solid var(--border-strong); border-radius: 12px; background: var(--panel); box-shadow: 0 24px 80px rgba(0, 0, 0, .45); }
+.recording-settings-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; padding: 20px 20px 15px; border-bottom: 1px solid var(--border); }
+.recording-settings-header h1 { margin: 0; font-size: 19px; }
+.recording-settings-header p { margin: 6px 0 0; color: var(--muted); font-size: 12px; line-height: 1.5; }
+.recording-settings-close { width: 30px; height: 30px; flex: 0 0 30px; display: grid; place-items: center; padding: 0; border-color: transparent; background: transparent; color: var(--muted); font-size: 19px; }
+.recording-settings-content { display: grid; gap: 17px; padding: 17px 20px 20px; }
+.recording-settings-section { display: grid; gap: 9px; }
+.recording-settings-section h2 { margin: 0; color: var(--muted); font-size: 11px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; }
+.recording-preset-options { display: grid; grid-template-columns: repeat(3, 1fr); gap: 7px; }
+.recording-preset { min-height: 36px; padding: 7px 9px; color: var(--muted); font-size: 12px; }
+.recording-preset--active { border-color: color-mix(in srgb, var(--primary) 50%, var(--border)); background: var(--primary-soft); color: var(--primary); font-weight: 650; }
+.recording-setting-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
+.recording-setting { display: grid; gap: 7px; min-width: 0; padding: 12px; border: 1px solid var(--border); border-radius: 9px; background: color-mix(in srgb, var(--surface) 58%, transparent); }
+.recording-setting-header { display: flex; align-items: baseline; justify-content: space-between; gap: 10px; }
+.recording-setting-header strong { font-size: 12px; }
+.recording-setting output { color: var(--primary); font: 12px ui-monospace, Consolas, monospace; white-space: nowrap; }
+.recording-setting input { width: 100%; margin: 2px 0; accent-color: var(--primary); cursor: pointer; }
+.recording-setting small { min-height: 31px; color: var(--muted); font-size: 11px; line-height: 1.4; }
+.recording-settings-note { margin: 0; color: var(--muted); font-size: 11px; }
+.recording-settings-footer { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 13px 20px; border-top: 1px solid var(--border); background: color-mix(in srgb, var(--surface) 35%, transparent); }
+.recording-settings-footer button { min-height: 35px; padding: 7px 13px; font-size: 12px; }
+.recording-settings-reset { border-color: transparent; background: transparent; color: var(--muted); }
+.recording-settings-actions { display: flex; gap: 7px; }
+.recording-settings-save { border-color: var(--primary-strong); background: var(--primary-strong); color: #fff; }
+.recording-settings-save:hover { background: var(--primary); color: #fff; }
+
+@media (max-width: 640px), (max-height: 620px) {
+  #recording-settings-root { padding: 14px; }
+  .recording-setting-grid { grid-template-columns: 1fr; }
+  .recording-setting small { min-height: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}
