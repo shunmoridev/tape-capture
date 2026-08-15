@@ -257,8 +257,15 @@ function disableAudioProcessingConstraint(
 }
 
 function isUnsupportedCaptureMode(error: unknown): boolean {
-  return error instanceof DOMException
-    && (error.name === "OverconstrainedError" || error.name === "ConstraintNotSatisfiedError");
+  const name =
+    error && typeof error === "object" && "name" in error
+      ? String(error.name)
+      : "";
+
+  return (
+    name === "OverconstrainedError"
+    || name === "ConstraintNotSatisfiedError"
+  );
 }
 
 function advertisedVideoModes(track: MediaStreamTrack): CaptureVideoMode[] {
