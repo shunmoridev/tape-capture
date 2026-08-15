@@ -14,8 +14,42 @@ recordings automatically while remaining fully controllable by the user.
 
 ## Download
 
+TapeCapture has been tested on Windows 11.
+
+The application has also been confirmed to build and launch on macOS and Linux, but its functionality has not been fully tested on those platforms. Some features may not work as expected depending on the environment or capture device.
+
+### Windows
+
 Windows installers are available from [GitHub Releases](https://github.com/shunmoridev/tape-capture/releases).
-FFmpeg is not bundled and must be installed separately. Release builds are currently unsigned, so Windows SmartScreen may display a warning.
+
+FFmpeg is not bundled with TapeCapture and must be installed separately. The current release builds are not code-signed, so Windows SmartScreen may display a warning.
+
+### macOS / Linux
+
+TapeCapture currently does not provide prebuilt binaries for macOS or Linux, so you will need to build the application from source.
+
+The following development tools are required. Please refer to their respective official documentation for installation instructions.
+
+- Node.js
+- pnpm
+- Rust
+- Tauri
+
+After cloning the repository, build the application with:
+
+```bash
+pnpm install
+pnpm tauri build
+```
+
+On Linux, some characters may not be displayed correctly.
+If this occurs, install an appropriate font that is available to WebKitGTK.
+
+On Ubuntu / Debian-based distributions, for example, you can install the Noto CJK fonts with:
+
+```bash
+sudo apt install -y fonts-noto-cjk
+fc-cache -fv
 
 ## What it does
 

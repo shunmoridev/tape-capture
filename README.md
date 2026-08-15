@@ -13,8 +13,42 @@ TapeCapture は、VHSデッキやその他のキャプチャーデバイスか�
 
 ## ダウンロード
 
+TapeCapture は Windows 11 環境で動作確認を行っています。
+
+macOS および Linux については、ビルドおよびアプリケーションの起動を確認していますが、各機能の動作については十分な検証を行っていません。環境やキャプチャーデバイスによっては、一部の機能が正常に動作しない可能性があります。
+
+### Windows
+
 Windows 向けインストーラーは [GitHub Releases](https://github.com/shunmoridev/tape-capture/releases) からダウンロードできます。
 FFmpeg は同梱されていないため、別途インストールしてください。現在のリリースビルドはコード署名されておらず、Windows SmartScreen の警告が表示される場合があります。
+
+### Mac/Linux
+
+現在、TapeCapture は macOS および Linux 向けのバイナリを提供していないため、利用するにはソースコードからのビルドが必要です。
+
+ビルドには以下の開発環境が必要です。導入方法については、それぞれの公式ドキュメントを参照してください。
+
+- Node.js
+- pnpm
+- Rust
+- Tauri
+
+リポジトリを取得後、以下のコマンドでビルドできます。
+
+```bash
+pnpm install
+pnpm tauri build
+```
+
+Linux 環境では、日本語などの文字が正常に表示されない場合があります。
+その場合は、WebKitGTK で利用可能な適切なフォントをインストールしてください。
+
+Ubuntu / Debian 系では、例えば以下のコマンドで Noto CJK フォントを導入できます。
+
+```
+sudo apt install -y fonts-noto-cjk
+fc-cache -fv
+```
 
 ## 主な機能
 
