@@ -50,6 +50,7 @@ On Ubuntu / Debian-based distributions, for example, you can install the Noto CJ
 ```bash
 sudo apt install -y fonts-noto-cjk
 fc-cache -fv
+```
 
 ## What it does
 
